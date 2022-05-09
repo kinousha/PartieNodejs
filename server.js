@@ -3,6 +3,7 @@ const cors = require("cors");
 const app = express();
 require("./app/routes/todo.routes")(app);
 require("./app/routes/user.routes")(app);
+require("./app/routes/auth.routes")(app);
 
 var corsOptions = {
   origin: "http://localhost:8081"
