@@ -1,9 +1,9 @@
 const express = require("express");
 const cors = require("cors");
 const app = express();
-require("./app/routes/todo.routes")(app);
-require("./app/routes/user.routes")(app);
-require("./app/routes/auth.routes")(app);
+
+
+
 
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -18,11 +18,14 @@ db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
 // simple route
-app.get("/", (req, res) => {
+app.get("/test", (req, res) => {
   res.json({ message: "Welcome to kine application." });
 });
+require("./app/routes/todo.routes")(app);
+require("./app/routes/user.routes")(app);
+require("./app/routes/auth.routes")(app);
 // set port, listen for requests
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 8000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
 });
