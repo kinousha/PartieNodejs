@@ -1,7 +1,6 @@
 const db = require("../models");
 const Todo = db.todos;
 const Op = db.Sequelize.Op;
-
 // Create and Save a new Todo
 exports.create = (req, res) => {
   // Validate request

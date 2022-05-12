@@ -2,9 +2,6 @@ const express = require("express");
 const cors = require("cors");
 const app = express();
 
-
-
-
 var corsOptions = {
   origin: "http://localhost:8081"
 };
@@ -18,7 +15,7 @@ db.sequelize.sync({ force: true }).then(() => {
   console.log("Drop and re-sync db.");
 });
 // simple route
-app.get("/test", (req, res) => {
+app.get("/", (req, res) => {
   res.json({ message: "Welcome to kine application." });
 });
 require("./app/routes/todo.routes")(app);
