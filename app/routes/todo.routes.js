@@ -4,7 +4,7 @@ module.exports = app => {
   var router = require("express").Router();
 
   // Create a new Todo
-  router.post("/todos", todos.create);
+  router.post("/", todos.create);
 
   // Retrieve all todos
   router.get("/", todos.findAll);
