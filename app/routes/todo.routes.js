@@ -1,5 +1,8 @@
 module.exports = app => {
   const todos = require("../controllers/todo.controller.js");
+  const config = require("../config/auth.config.js");
+
+  const jwt = require('jsonwebtoken');
 
   var router = require("express").Router();
 
@@ -17,24 +20,25 @@ module.exports = app => {
 
   // Delete a Todo with id
   router.delete("/:id",verifyToken, todos.delete);
+  
   app.use("/api/todos", router);
-  function verifyToken(req, res, next) {
-    // Get auth header value
-    const bearerHeader = req.headers['authorization'];
-    // Check if bearer is undefined
-    if(typeof bearerHeader !== 'undefined') {
-      // Split at the space
-      const bearer = bearerHeader.split(' ');
-      // Get token from array
-      const bearerToken = bearer[1];
-      // Set the token
-      req.token = bearerToken;
-      // Next middleware
-      next();
-    } else {
-      // Forbidden
-      res.sendStatus(403);
+  function verifyToken (req, res, next) {
+    let token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjUyMzQxNDgyLCJleHAiOjE2NTI0Mjc4ODJ9.EnKt2ii_H9T0_f7-a71GhYCdW-6ZOw5rrZ5R3utGbMQ";
+  
+    if (!token) {
+      return res.status(403).send({
+        message: "No token provided!"
+      });
     }
   
+    jwt.verify(token, config.secret, (err, decoded) => {
+      if (err) {
+        return res.status(401).send({
+          message: "Unauthorized!"
+        });
+      }
+      req.userId = decoded.id;
+      next();
+    });
   }
 };
