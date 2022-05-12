@@ -27,4 +27,15 @@ db.todos.belongsTo(db.users, {
   foreignKey: "userId",
   as: "users",
 });
+db.roles.belongsToMany(db.users, {
+  through: "user_roles",
+  foreignKey: "roleId",
+  otherKey: "userId"
+});
+db.users.belongsToMany(db.roles, {
+  through: "user_roles",
+  foreignKey: "userId",
+  otherKey: "roleId"
+});
+
 module.exports = db;
